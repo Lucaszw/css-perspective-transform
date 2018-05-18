@@ -37,7 +37,8 @@ let listeners = {
   mousemove: null
 };
 
-window.Main = (corners=[100, 100, 300, 100, 100, 300, 300, 300]) => {
+window.Main = (_corners=[100, 100, 300, 100, 100, 300, 300, 300]) => {
+  for (let i = 0;i<_corners.length;i++) corners[i] = _corners[i];
   currentcorner = -1;
 
   document.documentElement.style.margin="0px";
