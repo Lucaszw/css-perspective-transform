@@ -1,0 +1,48 @@
+body {
+  position: relative;
+  width: 960px;
+  height: 500px;
+}
+
+#background {
+  width: 960px;
+  height: 500px;
+  background: url(mosque.jpg);
+}
+
+svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.line {
+  stroke: #000;
+  stroke-opacity: .5;
+  stroke-width: 1px;
+  stroke-linecap: square;
+}
+
+.handle {
+  fill: none;
+  pointer-events: all;
+  stroke: #fff;
+  stroke-width: 2px;
+  cursor: move;
+}
+
+#buttons {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+}
+
+button {
+  display: block;
+  width: 10em;
+}
+
+button:focus {
+  outline: none;
+}
