@@ -13,6 +13,12 @@
   "dependencies": {
     "d3": "^5.4.0",
     "express": "^4.16.3",
+    "jquery": "^3.3.1",
+    "keyboard-shortcut": "^1.2.0",
+    "lodash": "^4.17.10",
+    "matter-js": "^0.14.1",
+    "pathseg": "^1.2.0",
+    "poly-decomp": "^0.2.1",
     "yo-yo": "^1.4.1"
   }
 }

@@ -40,24 +40,23 @@
     <script>
     const createScene = (placement='top') => {
 
-      let background, foreground;
+      let background, foreground, deviceContainer;
 
       if (placement == 'top') {
-        background = yo`
-        <div id="background"
-          style="width: 1000px; height: 1000px; background:url(/mosque.jpg)">
+        background = deviceContainer = yo`
+        <div style="width: 100%; height: 100%;">
         </div> `;
 
         foreground = yo`
-          <video id="video" width="100%" height="100%" autoplay></video>
+          <video id="video" style="object-fit: fill; width:100%;height:100%;" autoplay></video>
         `;
       } else {
         background = yo`
-          <video id="video" width="1000px" height="1000px" autoplay></video>
+          <video id="video" style="object-fit: fill; width:100%;height:100%" autoplay></video>
         `;
 
-        foreground = yo`
-          <img src='/mosque.jpg'>
+        foreground = deviceContainer = yo`
+          <div></div>
         `;
       }
 
@@ -85,6 +84,8 @@
             video.play();
         });
       }
+
+      Init(deviceContainer);
     }
 
     var menu = {
