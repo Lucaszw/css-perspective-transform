@@ -18,6 +18,8 @@
     "lodash": "^4.17.10",
     "pathseg": "^1.2.0",
     "poly-decomp": "^0.2.1",
+    "svg-intersections": "^0.4.0",
+    "svg-points": "^6.0.1",
     "vkeys": "^1.2.0",
     "yo-yo": "^1.4.1"
   }

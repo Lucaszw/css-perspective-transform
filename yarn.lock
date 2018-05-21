@@ -1471,6 +1471,14 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
 
+kld-affine@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/kld-affine/-/kld-affine-2.0.0.tgz#a3f3a96d08deb176a4561c4c552b20d718a253c7"
+
+kld-polynomial@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/kld-polynomial/-/kld-polynomial-0.1.1.tgz#6d7b114db5945409af8e1b6225cd2f0a6b555bd5"
+
 lazy-cache@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/lazy-cache/-/lazy-cache-1.0.4.tgz#a1d78fc3a50474cb80845d3b3b6e1da49a446e8e"
@@ -2450,6 +2458,17 @@ supports-color@^4.2.1:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-4.5.0.tgz#be7a0de484dec5c5cddf8b3d59125044912f635b"
   dependencies:
     has-flag "^2.0.0"
+
+svg-intersections@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/svg-intersections/-/svg-intersections-0.4.0.tgz#1d491530988974b1923d04a10bd59cc04ec150ff"
+  dependencies:
+    kld-affine "2.0.0"
+    kld-polynomial "0.1.1"
+
+svg-points@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/svg-points/-/svg-points-6.0.1.tgz#d9f60e1ef409051542b30f921207bc4497fed5ec"
 
 tapable@^0.2.7:
   version "0.2.8"
