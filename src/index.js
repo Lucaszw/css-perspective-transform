@@ -18,6 +18,23 @@ window.$ = $;
 window.Key = Key;
 window.vkeys = vkeys;
 
+// module aliases
+var Engine = Matter.Engine,
+    Render = Matter.Render,
+    World = Matter.World,
+    Body = Matter.Body,
+    Bodies = Matter.Bodies,
+    Composites = Matter.Composites,
+    Common = Matter.Common,
+    Svg = Matter.Svg,
+    Vertices = Matter.Vertices,
+    Mouse = Matter.Mouse,
+    MouseConstraint = Matter.MouseConstraint,
+    Events = Matter.Events,
+    Vector = Matter.Vector,
+    Query = Matter.Query;
+
+
 const loadSvg = () => {
   xhr = new XMLHttpRequest();
   xhr.open("GET","/dropbot.svg",false);
@@ -31,17 +48,6 @@ const loadSvg = () => {
 }
 
 const Init = (element) => {
-
-    // module aliases
-    var Engine = Matter.Engine,
-        Render = Matter.Render,
-        World = Matter.World,
-        Body = Matter.Body,
-        Bodies = Matter.Bodies,
-        Composites = Matter.Composites,
-        Common = Matter.Common,
-        Svg = Matter.Svg,
-        Vertices = Matter.Vertices;
 
     // create an engine
     var engine = Engine.create();
@@ -63,19 +69,77 @@ const Init = (element) => {
 
     let parts = _.map(svg.querySelectorAll("path"), (path,i) => {
       const vertices = Svg.pathToVertices(path, 30);
+      const mean = Vertices.mean(vertices);
+      const center = Vertices.centre(vertices);
       return Body.create({
           position: Vertices.centre(vertices),
           vertices: vertices,
           isStatic: true,
           render: {
-            fillStyle: "grey"
-          }
+            fillStyle: "rgb(16, 159, 179)",
+            strokeStyle: "black",
+            lineWidth: 1
+          },
+          label: `fluxel${i}`
       });
     });
+    console.log({parts});
 
     let body = Body.create({parts, isStatic: true});
 
+    var mouse = Mouse.create(render.canvas),
+    mouseConstraint = MouseConstraint.create(engine, {
+       mouse: mouse,
+       constraint: {
+           angularStiffness: 0,
+           render: {
+               visible: false
+           }
+       }
+    });
+
     World.add(engine.world, body);
+
+    document.addEventListener("mousedown", (e) => {
+      inverse = prevTransform.transformInverse(e.pageX, e.pageY);
+      x = inverse[0];
+      y = inverse[1];
+      console.log({x, y});
+    });
+
+
+    element.addEventListener("mousedown", (e) => {
+      let elementBox = element.getBoundingClientRect();
+      let renderSize = render.options;
+
+      // console.log({e});
+      // let x = (e.clientX/elementBox.width)*renderSize.width;
+      // let y = (e.clientY/elementBox.height)*renderSize.height;
+
+      let x = (e.offsetX/elementBox.width)*renderSize.width;
+      let y = (e.offsetY/elementBox.height)*renderSize.height;
+
+      if (prevTransform) {
+        // inverse = prevTransform.transformInverse(e.pageX, e.pageY);
+        // x = inverse[0];
+        // y = inverse[1];
+        // console.log({inverse});
+      }
+
+      // Transform to original coordinates
+
+      // console.log({x,y});
+
+      _.each(parts, (part, i) => {
+        if (!_.includes(part.label , "fluxel")) return;
+        let b = part.bounds;
+        if( b.min.x <= x && x <= b.max.x && b.min.y <= y && y <= b.max.y ) {
+          // Body.set(part, "render.fillStyle", "rgb(0, 0, 255)");
+          part.render.fillStyle = "rgb(0, 0, 255)";
+          // console.log(part.label);
+        }
+      });
+    });
 
     // run the engine
     Engine.run(engine);

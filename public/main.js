@@ -1,4 +1,6 @@
 let prevTransform, prevAnchors = [];
+window.prevTransform = prevTransform;
+window.prevAnchors = prevAnchors;
 
 let shiftDown;
 document.addEventListener("keydown", (e) => {
@@ -89,20 +91,7 @@ window.initPerspectiveTransform = function() {
 
   // Init transform:
   initTransform();
-  // update();
 }
-
-
-// window.addEventListener('load', function() {
-//   document.documentElement.style.margin="0px";
-//   document.documentElement.style.padding="0px";
-//   document.body.style.margin="0px";
-//   document.body.style.padding="0px";
-//
-//   // Init transform:
-//   initTransform();
-//   // update();
-// });
 
 window.addEventListener('mousedown', function(evnt) {
   var x = evnt.pageX, y = evnt.pageY, dx, dy;

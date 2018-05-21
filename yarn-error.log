@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node@8/8.11.1/bin/node /usr/local/bin/yarn start
+  /usr/local/Cellar/node@8/8.11.1/bin/node /usr/local/bin/yarn build
 
 PATH: 
   /usr/local/opt/node@8/bin:/Users/lucaszw/miniconda/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
@@ -2798,9 +2798,9 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 1
+  Exit code: 2
   Command: sh
-  Arguments: -c node app.js
+  Arguments: -c node_modules/.bin/webpack
   Directory: /Users/lucaszw/Desktop/css-perspective-transform
   Output:
   
