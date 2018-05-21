@@ -16,6 +16,14 @@ window.$ = $;
 window.Key = Key;
 window.vkeys = vkeys;
 
+let shiftDown;
+document.addEventListener("keydown", (e) => {
+  if (e.key == "Shift") shiftDown = true;
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.key == "Shift") shiftDown = false;
+});
 
 const loadSvg = () => {
   xhr = new XMLHttpRequest();
@@ -31,6 +39,7 @@ const loadSvg = () => {
 
 const GREEN = "rgb(0,255,0)";
 const BLUE = "rgb(0,0,255)";
+const RED = "rgb(255,0,0)";
 
 const Init = (element) => {
     let svg = loadSvg();
@@ -38,15 +47,9 @@ const Init = (element) => {
     svg.setAttribute("width", "100%");
     svg.setAttribute("height", "100%");
 
-    _.each(svg.querySelectorAll("[data-channels]"), (path) => {
-      // path.__defineGetter__("active",function() {
-      //   return this._active == true
-      // });
-      // path.__defineSetter__("active",function(_active) {
-      //   this._active = _active;
-      //   if (_active == true) this.style.fill = GREEN;
-      //   if (_active != true) this.style.fill = BLUE;
-      // });
+    let paths = svg.querySelectorAll("[data-channels]");
+
+    _.each(paths, (path) => {
 
       Object.defineProperty(path, 'active', {
         get: function() {return this._active == true},
@@ -57,27 +60,31 @@ const Init = (element) => {
         }
       });
 
+      Object.defineProperty(path, 'selected', {
+        get: function() {return this._selected == true},
+        set: function(_selected) {
+          // Unselect all other paths:
+          _.each(paths, (p) => {
+            p._selected = false;
+            p.style.stroke = "";
+          });
+
+          this._selected = _selected;
+          if (_selected == true) this.style.stroke = RED;
+        }
+      });
+
       path.addEventListener("click", (e) => {
         let active = path.active;
-        console.log({active});
         path.active = !path.active;
-
-        console.log({fill: path.style.fill})
-        console.log(path.style.fill == BLUE, path.style.fill, BLUE);
+        if (shiftDown == true) path.selected = true
       });
+
     });
 
     element.innerHTML = '';
     element.appendChild(svg);
 
-    // svg.setAttrib
-    // svg.style.width = "100%";
-    // svg.style.height = "100%";
-
-    // svg.addEventListener("click", (e) => {
-    //   console.log("Svg element clicked!");
-    //   console.log({e});
-    // })
 }
 
 module.exports = Init;
