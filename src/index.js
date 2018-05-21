@@ -8,6 +8,7 @@ const Matter = require('matter-js');
 const yo = require('yo-yo');
 const _ = require('lodash');
 const Key = require('keyboard-shortcut');
+const vkeys = require('vkeys');
 
 window.d3 = d3;
 window.yo = yo;
@@ -15,6 +16,7 @@ window.Matter = Matter;
 window._ = _;
 window.$ = $;
 window.Key = Key;
+window.vkeys = vkeys;
 
 const loadSvg = () => {
   xhr = new XMLHttpRequest();
@@ -66,7 +68,7 @@ const Init = (element) => {
           vertices: vertices,
           isStatic: true,
           render: {
-            fillStyle: "red"
+            fillStyle: "grey"
           }
       });
     });

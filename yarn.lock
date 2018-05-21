@@ -2607,7 +2607,7 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
 
-vkeys@^1.1.0:
+vkeys@^1.1.0, vkeys@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/vkeys/-/vkeys-1.2.0.tgz#983b32161b629a526111648223e0432b6004d39b"
 

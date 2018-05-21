@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node@8/8.11.1/bin/node /usr/local/bin/yarn build
+  /usr/local/Cellar/node@8/8.11.1/bin/node /usr/local/bin/yarn start
 
 PATH: 
   /usr/local/opt/node@8/bin:/Users/lucaszw/miniconda/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
@@ -30,10 +30,12 @@ npm manifest:
       "d3": "^5.4.0",
       "express": "^4.16.3",
       "jquery": "^3.3.1",
+      "keyboard-shortcut": "^1.2.0",
       "lodash": "^4.17.10",
       "matter-js": "^0.14.1",
       "pathseg": "^1.2.0",
       "poly-decomp": "^0.2.1",
+      "vkeys": "^1.2.0",
       "yo-yo": "^1.4.1"
     }
   }
@@ -1489,6 +1491,12 @@ Lockfile:
     version "0.5.1"
     resolved "https://registry.yarnpkg.com/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
   
+  keyboard-shortcut@^1.2.0:
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/keyboard-shortcut/-/keyboard-shortcut-1.2.0.tgz#54d6b4a5d2e2e91129d87d98fc6c70f1c2721187"
+    dependencies:
+      vkeys "^1.1.0"
+  
   kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
     version "3.2.2"
     resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
@@ -2645,6 +2653,10 @@ Lockfile:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   
+  vkeys@^1.1.0, vkeys@^1.2.0:
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/vkeys/-/vkeys-1.2.0.tgz#983b32161b629a526111648223e0432b6004d39b"
+  
   vm-browserify@0.0.4:
     version "0.0.4"
     resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"
@@ -2786,9 +2798,9 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 2
+  Exit code: 1
   Command: sh
-  Arguments: -c node_modules/.bin/webpack
+  Arguments: -c node app.js
   Directory: /Users/lucaszw/Desktop/css-perspective-transform
   Output:
   

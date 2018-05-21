@@ -7,6 +7,7 @@
             width: 100%;
             height: 100%;
             overflow: clip;
+            user-select: none;
         }
         #box {
             position: absolute;
@@ -19,15 +20,18 @@
             -webkit-transform-origin: 0 0;
             -moz-transform-origin: 0 0;
             -o-transform-origin: 0 0;
+            user-select: none;
         }
         #box img {
             width: 150px;
             height: 120px;
+            user-select: none;
         }
         .corner {
             position: absolute;
             top: 0px; left: 0px;
             border: 1px solid blue;
+            user-select: none;
         }
     </style>
     <script src="/dat.gui.min.js"> </script>
@@ -60,16 +64,21 @@
         `;
       }
 
+      const markerClicked = (e) => {
+        window.lastClicked = _.get(e, 'target.id');
+        console.log("Marker Clicked!", window.lastClicked);
+      }
+
       let container = yo`
         <div id="container">
             ${background}
             <div id="box">
               ${foreground}
             </div>
-            <div id="marker0" class="corner">TL</div>
-            <div id="marker2" class="corner">TR</div>
-            <div id="marker4" class="corner">BL</div>
-            <div id="marker6" class="corner">BR</div>
+            <div id="marker0" onmousedown=${markerClicked} class="corner">TL</div>
+            <div id="marker2" onmousedown=${markerClicked} class="corner">TR</div>
+            <div id="marker4" onmousedown=${markerClicked} class="corner">BL</div>
+            <div id="marker6" onmousedown=${markerClicked} class="corner">BR</div>
         </div>
       `;
       window.content = document.getElementById("content");
@@ -95,21 +104,36 @@
       set flipForeground(_flipForeground) {
         if (_flipForeground == true) {
           createScene('bottom');
-          Main();
+          initPerspectiveTransform();
         }
         if (_flipForeground == false) {
           createScene('top');
-          Main();
+          initPerspectiveTransform();
         }
         this._flipForeground = _flipForeground;
       }
     };
 
+    const changeCornerColor = (newColor) => {
+      _.each(document.querySelectorAll(".corner"), (corner) => {
+        corner.style.background = newColor;
+      });
+    }
+    document.addEventListener("keydown", (e) => {
+      if (vkeys[e.keyCode] != "shift") return;
+      changeCornerColor("green");
+    });
+
+    document.addEventListener("keyup", (e) => {
+      if (vkeys[e.keyCode] != "shift") return;
+      changeCornerColor("none");
+    });
+
     window.onload = function() {
       var gui = new dat.GUI();
       gui.add(menu, 'flipForeground');
       createScene('top');
-      Main();
+      initPerspectiveTransform();
     };
 
     </script>
