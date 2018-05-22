@@ -12111,14 +12111,26 @@ const Init = (element) => {
       return svgIntersections.shape("line", { x1, y1, x2, y2 });
     }
 
-    const castRay = (ray) => {
+    const castRay = (ray, ignore) => {
+      let ignoreId = ignore.getAttribute("id");
+      let start = ray.params[0];
       let collisions = [];
       _.each(paths, (p) => {p.active = false});
       _.each(paths, (path) => {
+        if (path.getAttribute("id") == ignoreId) return;
+
         let shape = path.svgIntersections;
         var intersection = svgIntersections.intersect(ray,shape);
         if (intersection.points.length > 0) {
-          collisions.push({path, intersection});
+          let distances = [];
+          _.each(intersection.points, (point) => {
+            let dx = point.x - start.x;
+            let dy = point.y - start.y;
+            let distance = Math.sqrt(dx*dx + dy*dy);
+            distances.push(distance);
+          });
+          let distance = _.min(distances);
+          collisions.push({path, intersection, distance});
         }
       });
       return collisions;
@@ -12138,7 +12150,7 @@ const Init = (element) => {
         for (let i = 0 ; i < NUM_SEGS; i++){
           x1 = x2 = bbox.x + i * bbox.width/NUM_SEGS;
           ray = Ray(x1,y1,x2,y2);
-          collisions = [...collisions, ...castRay(ray)];
+          collisions = [...collisions, ...castRay(ray, path)];
         }
       }
 
@@ -12149,7 +12161,7 @@ const Init = (element) => {
         for (let i = 0 ; i < NUM_SEGS; i++){
           x1 = x2 = bbox.x + i * bbox.width/NUM_SEGS;
           ray = Ray(x1,y1,x2,y2);
-          collisions = [...collisions, ...castRay(ray)];
+          collisions = [...collisions, ...castRay(ray, path)];
         }
       }
 
@@ -12159,7 +12171,7 @@ const Init = (element) => {
         for (let i = 0 ; i < NUM_SEGS; i++){
           y1 = y2 = bbox.y + i * bbox.height/NUM_SEGS;
           ray = Ray(x1,y1,x2,y2);
-          collisions = [...collisions, ...castRay(ray)];
+          collisions = [...collisions, ...castRay(ray, path)];
         }
       }
 
@@ -12169,24 +12181,17 @@ const Init = (element) => {
         for (let i = 0 ; i < NUM_SEGS; i++){
           y1 = y2 = bbox.y + i * bbox.height/NUM_SEGS;
           ray = Ray(x1,y1,x2,y2);
-          collisions = [...collisions, ...castRay(ray)];
+          collisions = [...collisions, ...castRay(ray, path)];
         }
       }
 
-      console.log({collisions});
-
-      // let ray = Ray(x1,y1,x2,y2);
-      // let collisions = castRay(ray);
-
-      _.map(collisions, (collision) => {
-        collision.path.style.fill = "purple";
-      });
-
+      let closest = _.sortBy(collisions, "distance")[0];
+      closest.path.selected = true;
+      closest.path.active = true;
     });
 
     _.each(paths, (path) => {
 
-      // svgIntersections.shape("path", {d: temp1.path.getAttribute("d")})
       const d = path.getAttribute("d");
       path.svgIntersections = svgIntersections.shape("path", {d});
 
