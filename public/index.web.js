@@ -12115,7 +12115,6 @@ const Init = (element) => {
       let ignoreId = ignore.getAttribute("id");
       let start = ray.params[0];
       let collisions = [];
-      _.each(paths, (p) => {p.active = false});
       _.each(paths, (path) => {
         if (path.getAttribute("id") == ignoreId) return;
 
@@ -12185,6 +12184,7 @@ const Init = (element) => {
         }
       }
 
+      path.active = false;
       let closest = _.sortBy(collisions, "distance")[0];
       closest.path.selected = true;
       closest.path.active = true;
