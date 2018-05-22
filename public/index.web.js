@@ -12097,6 +12097,7 @@ const GREEN = "rgb(0,255,0)";
 const BLUE = "rgb(0,0,255)";
 const RED = "rgb(255,0,0)";
 const DISTANCE = 10000;
+const NUM_SEGS = 10;
 
 const Init = (element) => {
     let svg = loadSvg();
@@ -12128,38 +12129,54 @@ const Init = (element) => {
       let bbox = path.getBBox();
       let x1,y1,x2,y2;
 
+      let collisions = [];
+
       if (e.code == "ArrowUp") {
-        x1 = bbox.x + bbox.width/2;
-        y1 = bbox.y + bbox.height/2;
-        x2 = bbox.x + bbox.width/2;
+        y1 = bbox.y;
         y2 = y1 - DISTANCE;
+
+        for (let i = 0 ; i < NUM_SEGS; i++){
+          x1 = x2 = bbox.x + i * bbox.width/NUM_SEGS;
+          ray = Ray(x1,y1,x2,y2);
+          collisions = [...collisions, ...castRay(ray)];
+        }
       }
 
       if (e.code == "ArrowDown") {
-        x1 = bbox.x + bbox.width/2;
-        y1 = bbox.y + bbox.height/2;
-        x2 = bbox.x + bbox.width/2;
+        y1 = bbox.y + bbox.height;
         y2 = y1 + DISTANCE;
+
+        for (let i = 0 ; i < NUM_SEGS; i++){
+          x1 = x2 = bbox.x + i * bbox.width/NUM_SEGS;
+          ray = Ray(x1,y1,x2,y2);
+          collisions = [...collisions, ...castRay(ray)];
+        }
       }
 
       if (e.code == "ArrowLeft") {
-        x1 = bbox.x + bbox.width/2;
-        y1 = bbox.y + bbox.height/2;
+        x1 = bbox.x;
         x2 = x1 - DISTANCE;
-        y2 = bbox.y + bbox.height/2;
+        for (let i = 0 ; i < NUM_SEGS; i++){
+          y1 = y2 = bbox.y + i * bbox.height/NUM_SEGS;
+          ray = Ray(x1,y1,x2,y2);
+          collisions = [...collisions, ...castRay(ray)];
+        }
       }
 
       if (e.code == "ArrowRight") {
-        x1 = bbox.x + bbox.width/2;
-        y1 = bbox.y + bbox.height/2;
+        x1 = bbox.x + bbox.width;
         x2 = x1 + DISTANCE;
-        y2 = bbox.y + bbox.height/2;
+        for (let i = 0 ; i < NUM_SEGS; i++){
+          y1 = y2 = bbox.y + i * bbox.height/NUM_SEGS;
+          ray = Ray(x1,y1,x2,y2);
+          collisions = [...collisions, ...castRay(ray)];
+        }
       }
 
-      let ray = Ray(x1,y1,x2,y2);
-      let collisions = castRay(ray);
+      console.log({collisions});
 
-      console.log({x1,y1,x2,y2});
+      // let ray = Ray(x1,y1,x2,y2);
+      // let collisions = castRay(ray);
 
       _.map(collisions, (collision) => {
         collision.path.style.fill = "purple";
@@ -12200,7 +12217,6 @@ const Init = (element) => {
         let active = path.active;
         path.active = !path.active;
         if (shiftDown == true) path.selected = true;
-        console.log({path});
       });
 
     });
